@@ -26,6 +26,10 @@ const EditModule = ({ deleteModule, modules, match }) => {
     <Container>
       <CloseButton to="/">Close</CloseButton>
       <h1>Edit module: {module.id}</h1>
+      <button type="button">Add module before</button>
+      <button type="button">Move up</button>
+      <button type="button">Move down</button>
+      <button type="button">Add module after</button>
       <button type="button" onClick={() => deleteModule(module.id)}>Delete</button>
     </Container>
   )

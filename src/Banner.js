@@ -8,7 +8,10 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: rgba(0, 0, 255, .25);
+  background-image: url(https://antonclub-res.cloudinary.com/image/upload/q_auto,f_auto/backoffice/list-item-previews/promotion);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
 `
 
 const Banner = ({ item, type }) => (

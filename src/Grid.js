@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react"
-import { map, flatMap } from "lodash"
+import { map, flatMap, indexOf } from "lodash"
 import cssEase from "css-ease"
 import styled from "styled-components"
 import { connect } from "react-firebase"
@@ -56,19 +56,18 @@ const EditorGrid = ({
   activeModule,
 }) => (
   <Grid match={match} items={items}>
-    {({ item, layouts, index }) => {
-      return (
+    {({ item, layouts, index }) => (
         <Item key={item.id} layouts={layouts} index={index}>
           <ItemContent item={item} type={item.type} />
           <ItemEditor
-            moduleIndex={'last'}
+            position={item.position}
             moduleId={item.moduleId}
             onMouseOutModule={onMouseOutModule}
             onMouseOverModule={onMouseOverModule}
-            isActive={activeModule === item.moduleId}
+            focused={activeModule === item.moduleId}
           />
         </Item>
-    )}}
+    )}
   </Grid>
 )
 
@@ -116,8 +115,16 @@ export default compose(
     items: flatMap(
       map(pages.modules, module =>
         map(module.products, (value, id) => {
-          // TODO: add position to item - first/last
+          const length = Object.keys(module.products).length
+          const index = indexOf(Object.keys(module.products), id) + 1
           return {
+            moduleOrder: 1,
+            moduleLength: Object.keys(module.products).length,
+            index: indexOf(Object.keys(module.products), id) + 1,
+            position: {
+              "first": index === 1,
+              "last": index === length,
+            },
             moduleId: module.id,
             type: module.type,
             module,
